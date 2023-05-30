@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  api:
+    build: ./    
+    ports:
+      - "8000:8000"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        celery -A flowo worker --loglevel=INFO --detach
+        python3 manage.py runserver api:8000
+    container_name: api
+    networks:
+      - reactdrf
+    volumes:
+      - /mnt/:/nf/
+      - ./flowo_db/db.sqlite3:/db.sqlite3
+    environment:
+      - PA_USERNAME={change_me}
+      - PA_PASSWORD={change_me}
+      - PATH_TO_FLOWO_DIR={change_me}
+      - PATH_TO_PA_IMPORT_DIR={change_me}
+      - PA_URL={change_me}
+      - ROPE_URL={change_me}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  web:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    container_name: web
+    stdin_open: true
+    networks:
+      - reactdrf
+  rabbitmq:
+    image: rabbitmq
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+    networks:
+      - reactdrf
+
+networks:
+  reactdrf:
+    driver: bridge

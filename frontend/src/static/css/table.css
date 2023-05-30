@@ -1,0 +1,36 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+} 
+
+.container {
+  width: 100%;
+}
+ 
+ table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: hidden;
+  }
+  th,
+  td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    
+    color: black;
+  }
+  th {
+    text-align: left;
+    color: #0079bf;
+  }
+  thead th {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  tbody td {
+    position: relative;
+  }
